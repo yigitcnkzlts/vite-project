@@ -7,7 +7,6 @@ function formatTimeNow() {
 }
 
 export default function Home({ currentUser }) {
-  // 40 post göstermek için seed’i çoğaltıyoruz (backend yok)
   const initialPosts = useMemo(() => {
     const expanded = [];
     let id = 1;
@@ -20,6 +19,7 @@ export default function Home({ currentUser }) {
           id: id++,
           name: p.name,
           username: p.username,
+          avatar: p.avatar || "https://i.pravatar.cc/80?img=12",
           likes: Math.floor(Math.random() * 90) + 1,
           reposts: Math.floor(Math.random() * 30) + 1,
           comments: Math.floor(Math.random() * 40) + 1,
@@ -45,17 +45,21 @@ export default function Home({ currentUser }) {
       time: formatTimeNow(),
       likes: 0,
       reposts: 0,
-      comments: Math.floor(Math.random() * 10) + 1,
+      comments: 0,
     };
 
-    setList([newPost, ...list]);
+    setList((prev) => [newPost, ...prev]);
     setText("");
+  };
+
+  // ✅ DELETE: sadece state’ten kaldırır
+  const handleDelete = (id) => {
+    setList((prev) => prev.filter((p) => p.id !== id));
   };
 
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-indigo-950 via-indigo-900 to-indigo-950">
       <div className="mx-auto max-w-5xl px-6 py-8">
-
         {/* düşünce yaz kutusu */}
         <div className="bg-white/85 backdrop-blur rounded-3xl shadow-xl border border-black/10 p-6">
           <div className="flex items-start gap-4">
@@ -94,7 +98,11 @@ export default function Home({ currentUser }) {
         {/* akış */}
         <div className="mt-8 space-y-6">
           {list.map((p) => (
-            <PostCard key={p.id} post={p} />
+            <PostCard
+              key={p.id}
+              post={p}
+              onDelete={handleDelete} // ✅ silmeyi PostCard’dan çağıracağız
+            />
           ))}
         </div>
       </div>

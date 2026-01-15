@@ -16,7 +16,7 @@ export default function Register({ onSuccess }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // çok basit doğrulama (boşsa çıkmasın)
+   
     if (!form.fullName || !form.username || !form.email || !form.password) {
       alert("Lütfen tüm alanları doldur.");
       return;
