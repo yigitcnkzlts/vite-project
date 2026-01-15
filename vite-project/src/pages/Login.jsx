@@ -1,4 +1,4 @@
-export default function Login() {
+export default function Login({ onSuccess }) {
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-green-700 to-green-600 flex items-center justify-center p-6">
       <div className="w-full max-w-md bg-white/85 backdrop-blur rounded-3xl shadow-xl border border-black/10 p-8">
@@ -31,6 +31,13 @@ export default function Login() {
 
           <button
             type="button"
+            onClick={() =>
+              onSuccess?.({
+                name: "Giriş Yapan Kullanıcı",
+                username: "kiwitter_user",
+                avatar: "https://i.pravatar.cc/80?img=11",
+              })
+            }
             className="w-full rounded-xl bg-green-700 hover:bg-green-800 text-white font-semibold py-3 mt-2 shadow"
           >
             GİRİŞ
